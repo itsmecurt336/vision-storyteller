@@ -21,12 +21,15 @@ public class PromptHandler {
 
         Console.WriteLine("] " + CurrentlyActivePassage.getIdentifier() + "\n" + CurrentlyActivePassage.getContents() + "\n");
         ArrayList<Option> Options = CurrentlyActivePassage.getOptions();
-        if (InvalidSelected) {Console.addEffect("Italize"); Console.setFGColor(255,128,0); Console.WriteLine("Invalid option selected."); Console.addEffect("Reset");}
-        Console.setFGColor(0, 128, 255); Console.addEffect("Underline");
+        
+        Console.setFGColor(0, 180, 255); Console.addEffect("Underline");
         for (int index = 0; index < Options.size(); index++) {
             Console.WriteLine("(" + index + ") " + Options.get(index).getDescript());
         }
         Console.addEffect("Reset");
+        if (InvalidSelected) {Console.addEffect("Italize"); Console.setFGColor(255,128,0); Console.WriteLine("Invalid option selected."); Console.addEffect("Reset");}
+
+        Console.Write("\nType a number to traverse to that passage: ");
         Scanner scr = new Scanner(System.in);
         try {
             Option select = Options.get(Integer.parseInt(scr.nextLine()));
