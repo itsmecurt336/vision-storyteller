@@ -5,21 +5,38 @@ import java.util.ArrayList;
 
 import objects.*;
 public class PromptHandler {
-    private int     PassageMovements = 0;
-    private Passage CurrentlyActivePassage = null;
-    private String  ActivePassageName = "";
+    private int                PassageMovements = 0;
+    private Passage            CurrentlyActivePassage = null;
+    private String             ActivePassageName = "";
+    private int                TypeSpeed = 5;
+    private ArrayList<Passage> PassageHistory = new ArrayList<>();
 
     private boolean InvalidSelected = false;
 
-    public void SwitchPassage(Passage switchTo) {this.CurrentlyActivePassage = switchTo; ActivePassageName = CurrentlyActivePassage.getIdentifier(); PassageMovements++; displayPassage();}
+    public int getTypeSpeed() {return this.TypeSpeed;}
+    public void setTypeSpeed(int newSpeed) {this.TypeSpeed = newSpeed;}
+
+    public void SwitchPassage(Passage switchTo) {this.CurrentlyActivePassage = switchTo; ActivePassageName = CurrentlyActivePassage.getIdentifier(); PassageMovements++; displayPassage(); PassageHistory.add(switchTo);}
     public Passage getPassage() {return this.CurrentlyActivePassage;}
 
     public String getPassageName() {return this.ActivePassageName;}
 
     public void displayPassage() {
-        Console.Clear(); Console.Write("Passage traversals: "); Console.setFGColor(255, 255, 0); Console.Write(PassageMovements + "\n\n"); Console.addEffect("Reset");
+        Console.Clear(); Console.Write("Passage Stats | Movements: "); Console.setFGColor(255, 255, 0); Console.Write(PassageMovements); Console.addEffect("Reset");
+        Console.Write(" | Dialog rate: x" ); Console.setFGColor(255, 255, 0); Console.Write(TypeSpeed + "\n\n"); Console.Write(PassageMovements); Console.addEffect("Reset");
 
-        Console.WriteLine("] " + CurrentlyActivePassage.getIdentifier() + "\n" + CurrentlyActivePassage.getContents() + "\n");
+        Console.WriteLine("] " + CurrentlyActivePassage.getIdentifier() + "\n");
+
+        for (int i = 0; i < CurrentlyActivePassage.getContents().length(); i++) {
+            Console.Write(CurrentlyActivePassage.getContents().charAt(i));
+
+            switch(CurrentlyActivePassage.getContents().charAt(i)) {
+                case '.' -> {Console.delay(100 *   TypeSpeed);}
+                case ',' -> {Console.delay(50 *    TypeSpeed);}
+                default  -> {Console.delay(8 *     TypeSpeed);}
+            }
+        }
+        Console.Write("\n\n");
         ArrayList<Option> Options = CurrentlyActivePassage.getOptions();
         
         Console.setFGColor(0, 180, 255); Console.addEffect("Underline");

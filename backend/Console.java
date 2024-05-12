@@ -1,5 +1,6 @@
 package backend;
 
+import java.lang.Thread;
 import java.util.Scanner;
 /**
  * A recreation of the C# Console class.
@@ -27,6 +28,7 @@ public class Console {
 
     public static void Clear() {output("\033[H\033[2J");}
     
+    public static void delay(int ms) {try {Thread.sleep(ms); } catch (Exception e) {}}
     public static String ReadLine() {
         Scanner s = new Scanner(System.in);
         var out = s.nextLine();
