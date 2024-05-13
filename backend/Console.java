@@ -7,7 +7,7 @@ import java.util.Scanner;
  * 
  * Exactly as what you'd expect.
  */
-public class Console {
+abstract class Console {
     private static void output(String m) {System.out.print(m);}
     
     public static void Write(String m)  {output(m);}
@@ -26,16 +26,28 @@ public class Console {
     public static void WriteLine(double m)  {output("" + m + "\n");}
     public static void WriteLine(byte m)    {output("" + m + "\n");}  
 
+    /** 
+    * Clears the console.
+    */
     public static void Clear() {output("\033[H\033[2J");}
-    
+
+    /** 
+    * Delays the execution of the next line for a set amount of time.
+    */
     public static void delay(int ms) {try {Thread.sleep(ms); } catch (Exception e) {}}
+
+    /** 
+    * Reads the next line from Std.in.
+    */
     public static String ReadLine() {
         Scanner s = new Scanner(System.in);
         var out = s.nextLine();
         s.close();
         return out + "";
     }
-
+    /** 
+    * Adds a visual effect for the next characters. Pass in "Reset" to clear all effects.
+    */
     public static void addEffect(String currentEffect) {
         switch (currentEffect) {
             case "Reset"           -> {output("\033[0m");  break;}
