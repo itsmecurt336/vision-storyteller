@@ -29,7 +29,7 @@ abstract class Console {
     /** 
     * Clears the console.
     */
-    public static void Clear() {output("\033[H\033[2J");}
+    public static void Clear() {output("\033[H\033[2J"); System.out.flush();}
 
     /** 
     * Delays the execution of the next line for a set amount of time.
@@ -64,8 +64,8 @@ abstract class Console {
     }
     
     /**
-     * Sets the console text color to rgb. Uses values from 0 to 255
-     */
+    * Sets the foreground color of the console.
+    */
     public static void setFGColor(int[] rgb) {output(String.format("\033[38;2;%d;%d;%dm", rgb[0], rgb[1], rgb[2]));}
     public static void setFGColor(int r, int g, int b) {output(String.format("\033[38;2;%d;%d;%dm", r, g, b));}
     /** 
