@@ -20,21 +20,25 @@ public class PromptHandler {
 
     /** 
     * Sets the Type Speed multiplier.
+     * @param newSpeed
     */
     public void setTypeSpeed(int newSpeed) {this.TypeSpeed = newSpeed;}
 
     /** 
     * Switches the currently active Passage to the Passage passed onto the method.
+     * @param switchTo
     */
     public void SwitchPassage(Passage switchTo) {this.CurrentlyActivePassage = switchTo; ActivePassageName = CurrentlyActivePassage.getIdentifier(); PassageMovements++; displayPassage(); PassageHistory.add(switchTo);}
     
     /** 
     * Obtains the currently active Passage and returns it.
+     * @return 
     */
     public Passage getPassage() {return this.CurrentlyActivePassage;}
 
     /** 
     * Returns the title of the Passage.
+    * @return
     */
     public String getPassageName() {return this.ActivePassageName;}
 
@@ -67,16 +71,13 @@ public class PromptHandler {
         if (InvalidSelected) {Console.addEffect("Italize"); Console.setFGColor(255,128,0); Console.WriteLine("Invalid option selected."); Console.addEffect("Reset");}
 
         Console.Write("\nType a number to traverse to that passage: ");
-        Scanner scr = new Scanner(System.in);
-        try {
+        try (java.util.Scanner scr = new Scanner(System.in)) {
             Option select = Options.get(Integer.parseInt(scr.nextLine()));
             InvalidSelected = false;
             SwitchPassage(select.getTargetPassage());
         } catch (Exception e) {
             InvalidSelected = true;
             displayPassage();
-        } finally {
-            scr.close();
         }
 
     }
