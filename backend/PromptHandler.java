@@ -12,15 +12,35 @@ public class PromptHandler {
     private ArrayList<Passage> PassageHistory = new ArrayList<>();
 
     private boolean InvalidSelected = false;
-
+    /** 
+    * Returns the Type Speed multiplier. Passage rendering is 8ms per character by default, but slows down to 25ms on a comma, and 75ms per period.
+    * @returns typespeed, an integer.
+    */
     public int getTypeSpeed() {return this.TypeSpeed;}
+
+    /** 
+    * Sets the Type Speed multiplier.
+    */
     public void setTypeSpeed(int newSpeed) {this.TypeSpeed = newSpeed;}
 
+    /** 
+    * Switches the currently active Passage to the Passage passed onto the method.
+    */
     public void SwitchPassage(Passage switchTo) {this.CurrentlyActivePassage = switchTo; ActivePassageName = CurrentlyActivePassage.getIdentifier(); PassageMovements++; displayPassage(); PassageHistory.add(switchTo);}
+    
+    /** 
+    * Obtains the currently active Passage and returns it.
+    */
     public Passage getPassage() {return this.CurrentlyActivePassage;}
 
+    /** 
+    * Returns the title of the Passage.
+    */
     public String getPassageName() {return this.ActivePassageName;}
 
+    /** 
+    * Displays the contents of the Passage.
+    */
     public void displayPassage() {
         Console.Clear(); Console.Write("Passage Stats | Movements: "); Console.setFGColor(255, 255, 0); Console.Write(PassageMovements); Console.addEffect("Reset");
         Console.Write(" | Dialog rate: x" ); Console.setFGColor(255, 255, 0); Console.Write(TypeSpeed + "\n\n"); Console.Write(PassageMovements); Console.addEffect("Reset");
@@ -31,8 +51,8 @@ public class PromptHandler {
             Console.Write(CurrentlyActivePassage.getContents().charAt(i));
 
             switch(CurrentlyActivePassage.getContents().charAt(i)) {
-                case '.' -> {Console.delay(100 *   TypeSpeed);}
-                case ',' -> {Console.delay(50 *    TypeSpeed);}
+                case '.' -> {Console.delay(75 *   TypeSpeed);}
+                case ',' -> {Console.delay(25 *    TypeSpeed);}
                 default  -> {Console.delay(8 *     TypeSpeed);}
             }
         }
