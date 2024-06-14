@@ -7,7 +7,7 @@ import java.util.Scanner;
  * 
  * Exactly as what you'd expect.
  */
-abstract class Console {
+abstract class Pencil {
     private static void output(String m) {System.out.print(m);}
     
     public static void Write(String m)  {output(m);}
